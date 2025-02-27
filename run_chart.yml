@@ -1,0 +1,43 @@
+name: Generate Run Chart
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Para ejecutar manualmente desde la interfaz de GitHub
+
+jobs:
+  generate-run-chart:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Obtener el código del repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Paso 2: Configurar Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Paso 3: Instalar dependencias (como matplotlib)
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install matplotlib
+
+      # Paso 4: Ejecutar el script Python para generar el gráfico
+      - name: Generate Run Chart
+        run: |
+          python generate_run_chart.py
+
+      # Paso 5: Subir el artefacto generado (run_chart.png)
+      - name: Upload Run Chart Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: run-chart
+          path: run_chart.png
