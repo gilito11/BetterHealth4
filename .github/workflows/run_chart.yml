@@ -26,7 +26,7 @@ jobs:
       - name: Ejecutar script y generar gráfico
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usamos el token del repo
-        run: python generate_weekly_issues_chart.py
+        run: python try_issues.py
 
       - name: Commit y push gráfico
         run: |
