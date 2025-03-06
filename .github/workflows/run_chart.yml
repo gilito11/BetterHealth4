@@ -1,0 +1,37 @@
+name: Weekly Issues Run Chart
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Cada domingo a medianoche
+  workflow_dispatch:  # Permite ejecutarlo manualmente si quieres
+
+jobs:
+  generate-weekly-chart:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install matplotlib numpy requests
+
+      - name: Ejecutar script y generar gráfico
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usamos el token del repo
+        run: python generate_weekly_issues_chart.py
+
+      - name: Commit y push gráfico
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add *.pdf
+          git commit -m "Gráfico semanal de issues actualizado"
+          git push
