@@ -2,8 +2,11 @@ name: Weekly Issues Run Chart
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Cada domingo a medianoche
-  workflow_dispatch:  # Permite ejecutarlo manualmente si lo necesitas
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write  # 💥 Esto da permiso al token para hacer push
 
 jobs:
   generate-weekly-chart:
@@ -25,7 +28,7 @@ jobs:
 
       - name: Ejecutar script y generar gráfico
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Token de GitHub como variable de entorno
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/workflows/try_issues.py
 
       - name: Commit y push gráfico
