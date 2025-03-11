@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ea5cbc-cd41-4d0d-a771-4b425ad47fc9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/BetterHealth4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BetterHealth4.iml" afterDir="false" />
+    <list default="true" id="88ea5cbc-cd41-4d0d-a771-4b425ad47fc9" name="Changes" comment="Añadir matplotlib como dependencia y mejorar generación de gráficos de issues">
+      <change afterPath="$PROJECT_DIR$/.github/scripts/pareto.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/pareto.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/scripts/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/.github/scripts/scriptrunchart.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/generate_issue_report.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/generate_issue_report.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +45,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -50,11 +54,17 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ericg\PycharmProjects\BetterHealth4\.github\scripts" />
+      <recent name="C:\Users\ericg\PycharmProjects\BetterHealth4\.github\workflows" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
-        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.25659.43" />
+        <option value="bundled-python-sdk-181015f7ab06-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.25659.43" />
       </set>
     </attachedChunks>
   </component>
@@ -68,10 +78,28 @@
       <updated>1740049661216</updated>
       <workItem from="1740049662337" duration="1647000" />
       <workItem from="1740392209897" duration="803000" />
+      <workItem from="1741257568824" duration="2288000" />
+      <workItem from="1741685735502" duration="102000" />
+      <workItem from="1741685867869" duration="56000" />
+      <workItem from="1741688102206" duration="1685000" />
     </task>
+    <task id="LOCAL-00001" summary="Añadir dependencias de matplotlib y requests; actualizar configuración del proyecto y mejorar el script de generación de gráficos de issues">
+      <option name="closed" value="true" />
+      <created>1741262320577</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741262320577</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Gráfico semanal de issues actualizado" />
+    <MESSAGE value="Añadir matplotlib como dependencia y mejorar generación de gráficos de issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Añadir matplotlib como dependencia y mejorar generación de gráficos de issues" />
   </component>
 </project>
