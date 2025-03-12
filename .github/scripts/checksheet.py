@@ -243,9 +243,18 @@ def generate_check_sheet_png(checklist_data):
     
     # Adjust layout and save
     plt.tight_layout()
+    
+    # Create output directory if it doesn't exist
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Save to output directory
+    output_path = os.path.join(output_dir, "checksheet_table.png")
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    # Also save to current directory for backward compatibility
     plt.savefig('checksheet_table.png', dpi=300, bbox_inches='tight')
     
-    print("Check sheet visualization generated: checksheet_table.png")
+    print(f"Check sheet visualization generated: {output_path}")
 
 def main():
     # Get current month and year
