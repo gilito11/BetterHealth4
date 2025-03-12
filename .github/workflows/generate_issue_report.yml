@@ -43,16 +43,12 @@ jobs:
       - name: 📊 Ejecutar el script de generación de gráficos
         run: python .github/scripts/scriptrunchart.py  # Ajusta la ruta si es necesario
 
-      - name: 📂 Mover gráficos a la carpeta grafico_historial/
-        run: |
-          mv *.png ishikawa/  # Mover los gráficos generados a la carpeta 'ishikawa'
+       # Subir los gráficos como artifacts
+      - name: Subir gráficos como artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: gráficos  # Nombre del artifact que puedes usar para identificarlo
+          path: *.png    # Asegúrate de que los gráficos generados sean *.png y estén en el directorio de trabajo
 
-      - name: 📝 Hacer commit y push de los gráficos
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add grafico_historial/  # Agregar los gráficos al commit
-          git commit -m "📊 Actualizar gráficos de issues - Semana $(date +'%V %B')" || echo "Sin cambios para commitear"
-          git push  # Hacer push de los cambios al repositorio
 
         continue-on-error: true
