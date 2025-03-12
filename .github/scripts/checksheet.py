@@ -56,9 +56,7 @@ def save_checklist_to_json(checklist_data, output_file="checksheet_data.json"):
 
 def generate_check_sheet_png(checklist_data):
     """Genera una imatge PNG amb la taula de la checklist."""
-    output_dir = "output"
-    os.makedirs(output_dir, exist_ok=True)  # Assegura que la carpeta existeix
-    output_path = os.path.join(output_dir, "checksheet_table.png")
+    output_path = "checksheet_table.png"  # Ara es desa directament a l'arrel
 
     month = checklist_data["month"]
     data = [{"Phase": phase, "Week 1": phase_data["week1"]["issues_count"], "Week 2": phase_data["week2"]["issues_count"],
