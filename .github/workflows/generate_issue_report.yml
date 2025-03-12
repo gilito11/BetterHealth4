@@ -32,7 +32,7 @@ jobs:
           python-version: "3.10"
 
       - name: 📦 Instalar dependencias
-        run: pip install requests matplotlib
+        run: pip install requests matplotlib scipy
 
       - name: 🧑‍💻 Obtener los datos de los issues desde GitHub
         run: |
