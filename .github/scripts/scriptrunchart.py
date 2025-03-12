@@ -5,6 +5,7 @@ import locale
 import os
 import json
 import sys
+import calendar
 
 # Establecer la localización a español para los nombres de mes
 try:
@@ -38,8 +39,8 @@ open_issues_daily = {}
 closed_issues_daily = {}
 open_issues_monthly = {}
 closed_issues_monthly = {}
-open_issues_weekly_custom = {}
-closed_issues_weekly_custom = {}
+open_issues_weekly = {}
+closed_issues_weekly = {}
 
 # Procesar issues
 for issue in issues:
@@ -49,8 +50,11 @@ for issue in issues:
         open_issues_daily[created_at] = open_issues_daily.get(created_at, 0) + 1
         month_key = created_at.strftime('%Y-%m')
         open_issues_monthly[month_key] = open_issues_monthly.get(month_key, 0) + 1
-        key_custom = (created_at.year, created_at.month, week_of_month(created_at))
-        open_issues_weekly_custom[key_custom] = open_issues_weekly_custom.get(key_custom, 0) + 1
+        
+        # Semana del mes
+        semana = week_of_month(created_at)
+        week_key = f"{created_at.year}-{created_at.month}-S{semana}"
+        open_issues_weekly[week_key] = open_issues_weekly.get(week_key, 0) + 1
     
     closed_at_str = issue.get('closed_at')
     if closed_at_str:
@@ -58,8 +62,11 @@ for issue in issues:
         closed_issues_daily[closed_at] = closed_issues_daily.get(closed_at, 0) + 1
         month_key_closed = closed_at.strftime('%Y-%m')
         closed_issues_monthly[month_key_closed] = closed_issues_monthly.get(month_key_closed, 0) + 1
-        key_custom_closed = (closed_at.year, closed_at.month, week_of_month(closed_at))
-        closed_issues_weekly_custom[key_custom_closed] = closed_issues_weekly_custom.get(key_custom_closed, 0) + 1
+        
+        # Semana del mes
+        semana_closed = week_of_month(closed_at)
+        week_key_closed = f"{closed_at.year}-{closed_at.month}-S{semana_closed}"
+        closed_issues_weekly[week_key_closed] = closed_issues_weekly.get(week_key_closed, 0) + 1
 
 fecha_actual = datetime.now()
 fecha_str = fecha_actual.strftime('%Y-%m-%d')
@@ -129,46 +136,83 @@ plt.savefig(output_path, dpi=300)
 print(f"¿El archivo fue creado? {os.path.exists(output_path)}")
 plt.close()
 
-# GRÁFICO 3: Run Chart acumulativo (tendencia de issues a lo largo del tiempo)
-print("Generando gráfico 3: Run Chart de Issues Acumulados")
-# Obtener un rango de fechas para el período de análisis (últimos 30 días)
-fecha_inicio = fecha_actual.date() - timedelta(days=30)
-fechas = [fecha_inicio + timedelta(days=i) for i in range(31)]
+# GRÁFICO 3: Run Chart por semanas del mes actual y meses anteriores
+print("Generando gráfico 3: Run Chart por Semanas")
 
-# Calcular issues acumulados
-open_acumulados = []
-closed_acumulados = []
-total_open = 0
-total_closed = 0
+# Obtener datos de los últimos 3 meses por semana
+meses_analisis = 3
+semanas = []
+etiquetas_semanas = []
 
-for fecha in fechas:
-    total_open += open_issues_daily.get(fecha, 0)
-    total_closed += closed_issues_daily.get(fecha, 0)
-    open_acumulados.append(total_open)
-    closed_acumulados.append(total_closed)
+# Obtener año y mes actual
+ano_actual = fecha_actual.year
+mes_actual = fecha_actual.month
 
-# Convertir fechas a etiquetas para el eje X
-etiquetas_fechas = [fecha.strftime('%d/%m') for fecha in fechas]
-indices_mostrar = [0, 10, 20, 30] if len(fechas) > 30 else list(range(len(fechas)))
+# Generar las semanas para los últimos 3 meses
+for m in range(meses_analisis):
+    mes = mes_actual - m
+    ano = ano_actual
+    
+    # Ajustar el año si es necesario
+    if mes <= 0:
+        mes += 12
+        ano -= 1
+    
+    # Determinar número de semanas en el mes
+    _, dias_en_mes = calendar.monthrange(ano, mes)
+    num_semanas = (dias_en_mes - 1) // 7 + 1
+    
+    # Agregar semanas al listado
+    for s in range(1, num_semanas + 1):
+        semana_key = f"{ano}-{mes}-S{s}"
+        semanas.append(semana_key)
+        
+        # Crear etiqueta amigable
+        nombre_mes = datetime(ano, mes, 1).strftime('%b')
+        etiquetas_semanas.append(f"{nombre_mes} S{s}")
+
+# Invertir para mostrar cronológicamente
+semanas.reverse()
+etiquetas_semanas.reverse()
+
+# Obtener datos para cada semana
+open_por_semana = [open_issues_weekly.get(semana, 0) for semana in semanas]
+closed_por_semana = [closed_issues_weekly.get(semana, 0) for semana in semanas]
 
 plt.figure()
-plt.plot(range(len(fechas)), open_acumulados, label='Issues Abiertas Acumuladas', color='blue', marker='o', linestyle='-', linewidth=2, markevery=5)
-plt.plot(range(len(fechas)), closed_acumulados, label='Issues Cerradas Acumuladas', color='green', marker='s', linestyle='-', linewidth=2, markevery=5)
+plt.plot(range(len(semanas)), open_por_semana, label='Issues Abiertas', color='blue', marker='o', linestyle='-', linewidth=2)
+plt.plot(range(len(semanas)), closed_por_semana, label='Issues Cerradas', color='green', marker='s', linestyle='-', linewidth=2)
 
-# Añadir línea de referencia (media)
-media_open = sum(open_acumulados) / len(open_acumulados)
-media_closed = sum(closed_acumulados) / len(closed_acumulados)
-plt.axhline(y=media_open, color='blue', linestyle='--', alpha=0.5, label='Media Issues Abiertas')
-plt.axhline(y=media_closed, color='green', linestyle='--', alpha=0.5, label='Media Issues Cerradas')
+# Calcular y agregar líneas de tendencia (regresión lineal simple)
+if len(semanas) > 1:
+    import numpy as np
+    from scipy.stats import linregress
+    
+    try:
+        # Para issues abiertas
+        x = np.array(range(len(semanas)))
+        y_open = np.array(open_por_semana)
+        slope_open, intercept_open, _, _, _ = linregress(x, y_open)
+        trend_open = intercept_open + slope_open * x
+        plt.plot(x, trend_open, 'b--', label='Tendencia Issues Abiertas', alpha=0.7)
+        
+        # Para issues cerradas
+        y_closed = np.array(closed_por_semana)
+        slope_closed, intercept_closed, _, _, _ = linregress(x, y_closed)
+        trend_closed = intercept_closed + slope_closed * x
+        plt.plot(x, trend_closed, 'g--', label='Tendencia Issues Cerradas', alpha=0.7)
+    except:
+        print("No se pudo calcular las líneas de tendencia, se omitirán")
 
-plt.xlabel('Fecha')
-plt.ylabel('Cantidad Acumulada de Issues')
-plt.title('Run Chart: Tendencia de Issues en los Últimos 30 Días')
+plt.xlabel('Semana')
+plt.ylabel('Cantidad de Issues')
+plt.title('Run Chart: Issues por Semana (Últimos 3 Meses)')
 plt.legend()
-plt.xticks([i for i in indices_mostrar], [etiquetas_fechas[i] for i in indices_mostrar], rotation=45)
+plt.grid(True)
+plt.xticks(range(len(semanas)), etiquetas_semanas, rotation=45)
 plt.tight_layout()
 
-output_path = os.path.join(output_dir, f'runchart_issues_{fecha_str}.png')
+output_path = os.path.join(output_dir, f'runchart_issues_semanal_{fecha_str}.png')
 print(f"Guardando run chart en: {output_path}")
 plt.savefig(output_path, dpi=300)
 print(f"¿El archivo fue creado? {os.path.exists(output_path)}")
