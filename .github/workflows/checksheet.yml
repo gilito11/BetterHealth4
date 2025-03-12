@@ -52,4 +52,4 @@ jobs:
           name: checksheet-files
           path: |
             checksheet_data.json
-            output/checksheet_table.png
+            checksheet_table.png
