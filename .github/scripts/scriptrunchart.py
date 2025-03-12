@@ -44,8 +44,8 @@ try:
             
     return response.json()
 except Exception as e:
-    print(f"Error al obtener issues desde la API: {e}")
-    return []
+print(f"Error al obtener issues desde la API: {e}")
+return []
 
 # Diccionarios para agrupar datos
 open_issues_daily = {}
