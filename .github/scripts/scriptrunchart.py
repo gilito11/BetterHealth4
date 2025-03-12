@@ -88,6 +88,22 @@ plt.tight_layout()
 plt.savefig(f'{directorio}/grafico_global_mensual_{fecha_str}.png')
 plt.close(fig2)
 
+
 # Gráfico semanal global
 keys_custom = sorted(set(open_issues_weekly_custom.keys()) | set(closed_issues_weekly_custom.keys()))
 labels_custom = [f"Week {k[2]} - {datetime(k[0], k[1], 1).strftime('%B')}" for k in keys_custom]
+open_custom_weekly = [open_issues_weekly_custom.get(k, 0) for k in keys_custom]
+closed_custom_weekly = [closed_issues_weekly_custom.get(k, 0) for k in keys_custom]
+
+fig3 = plt.figure(figsize=(10, 5))
+plt.plot(labels_custom, open_custom_weekly, label='Issues Abiertas', color='blue')
+plt.plot(labels_custom, closed_custom_weekly, label='Issues Cerradas', color='green')
+plt.xlabel('Semana')
+plt.ylabel('Cantidad de Issues')
+plt.title('Progresión Global Semanal de Issues')
+plt.legend()
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig(f'{directorio}/grafico_semanal_global_{fecha_str}.png')
+plt.close(fig3)
