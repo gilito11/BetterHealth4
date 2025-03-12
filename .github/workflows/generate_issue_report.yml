@@ -45,7 +45,7 @@ jobs:
 
        # Subir los gráficos como artifacts
       - name: Subir gráficos como artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: gráficos  # Nombre del artifact que puedes usar para identificarlo
 
