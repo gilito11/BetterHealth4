@@ -23,12 +23,16 @@ jobs:
           pip install PyGithub matplotlib
       
       - name: Generate histogram with open issues
-        run: python .github/scripts/generate_weekly_histogram.py
+        run: |
+          cd .github/scripts/
+          python generate_weekly_histogram.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Generate histogram with closed issues
-        run: python .github/scripts/generate_weekly_histogram.py --state closed
+        run: |
+          cd .github/scripts/
+          python generate_weekly_histogram.py --state closed
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
@@ -36,10 +40,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: histogram_issues_open
-          path: histogram_issues_open.png
+          path: .github/scripts/histogram_issues_open.png
       
       - name: Upload Histogram closed issues
         uses: actions/upload-artifact@v4
         with:
           name: histogram_issues_closed
-          path: histogram_issues_closed.png
+          path: .github/scripts/histogram_issues_closed.png
