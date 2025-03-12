@@ -22,6 +22,31 @@ semana_actual = f"Semana_{fecha_actual.isocalendar()[1]}"
 directorio = f'grafico_historial/{semana_actual}'
 os.makedirs(directorio, exist_ok=True)
 
+# Si no se pudo leer desde archivo, intentar con la API
+try:
+    REPO_OWNER = 'gilito11'
+    REPO_NAME = 'BetterHealth4'
+    url = f'https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues?state=all&per_page=100'
+        
+    print(f"Obteniendo issues desde la API de GitHub: {url}")
+    headers = {}
+        
+    # Usar token si está disponible (aumenta límite de tasa)
+    github_token = os.getenv('GITHUB_TOKEN')
+    if github_token:
+        headers['Authorization'] = f'token {github_token}'
+            
+    response = requests.get(url, headers=headers, timeout=15)
+    if response.status_code != 200:
+        print(f"Error de API: Código {response.status_code}")
+        print(f"Respuesta: {response.text}")
+        return []
+            
+    return response.json()
+except Exception as e:
+    print(f"Error al obtener issues desde la API: {e}")
+    return []
+
 # Diccionarios para agrupar datos
 open_issues_daily = {}
 closed_issues_daily = {}
