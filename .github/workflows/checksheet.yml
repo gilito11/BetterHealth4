@@ -38,13 +38,10 @@ jobs:
         run: |
           python .github/scripts/checksheet.py
       
-      - name: Debug output folder
-        run: ls -l output/
-
       - name: Verify generated files
         run: |
           if [ -f "checksheet_data.json" ]; then echo "✅ JSON generat correctament"; else echo "❌ JSON no trobat"; fi
-          if [ -f "output/checksheet_table.png" ]; then echo "✅ Imatge generada correctament"; else echo "❌ Imatge no trobada"; fi
+          if [ -f "checksheet_table.png" ]; then echo "✅ Imatge generada correctament"; else echo "❌ Imatge no trobada"; fi
       
       - name: Upload Checksheet as artifacts
         uses: actions/upload-artifact@v4
@@ -52,4 +49,4 @@ jobs:
           name: checksheet-files
           path: |
             checksheet_data.json
-            output/checksheet_table.png
+            checksheet_table.png
