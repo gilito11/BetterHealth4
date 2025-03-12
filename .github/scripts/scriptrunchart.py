@@ -3,18 +3,15 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import locale
 import os
+import json
 
 # Establecer la localización a español para los nombres de mes
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
-# Datos del repositorio público
-REPO_OWNER = 'gilito11'
-REPO_NAME = 'BetterHealth4'
-url = f'https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues?state=all&per_page=100'
-
-# Solicitud GET a la API de GitHub
-response = requests.get(url)
-issues = response.json()
+# Leer el archivo issues.json generado por la acción de GitHub
+issues_file = os.getenv('ISSUES_FILE', 'issues.json')  # Leemos el archivo de issues desde el entorno
+with open(issues_file, 'r') as file:
+    issues = json.load(file)  # Cargar los datos de issues desde el archivo JSON
 
 def week_of_month(fecha):
     return (fecha.day - 1) // 7 + 1
@@ -93,18 +90,4 @@ plt.close(fig2)
 
 # Gráfico semanal global
 keys_custom = sorted(set(open_issues_weekly_custom.keys()) | set(closed_issues_weekly_custom.keys()))
-labels_custom = [f"Week {k[2]} - {datetime(k[0], k[1], 1).strftime('%B')}" for k in keys_custom]
-open_custom = [open_issues_weekly_custom.get(k, 0) for k in keys_custom]
-closed_custom = [closed_issues_weekly_custom.get(k, 0) for k in keys_custom]
-fig3 = plt.figure(figsize=(10, 5))
-plt.plot(range(len(labels_custom)), open_custom, label='Issues Abiertas', color='blue', marker='o')
-plt.plot(range(len(labels_custom)), closed_custom, label='Issues Cerradas', color='green', marker='o')
-plt.xlabel('Semana')
-plt.ylabel('Cantidad de Issues')
-plt.title('Progresión Global de Issues (por Semana)')
-plt.xticks(range(len(labels_custom)), labels_custom, rotation=45)
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.savefig(f'{directorio}/grafico_global_semanal_{fecha_str}.png')
-plt.close(fig3)
+labels_custom = [f"Week {k[2]
