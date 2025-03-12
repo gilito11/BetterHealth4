@@ -48,7 +48,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: gráficos  # Nombre del artifact que puedes usar para identificarlo
-          path: *.png    # Asegúrate de que los gráficos generados sean *.png y estén en el directorio de trabajo
 
 
         continue-on-error: true
