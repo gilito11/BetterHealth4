@@ -3,6 +3,7 @@ import re
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
+from datetime import datetime
 
 # Get issues data from file
 issues_file = os.getenv('ISSUES_FILE')
@@ -57,6 +58,6 @@ plt.title('Pareto Chart of Commit Types')
 plt.xticks(rotation=45)
 plt.grid(True)
 
-# Save the plot to a file
+# Save the plot to a file with a consistent name
 plt.savefig('pareto_chart.png', bbox_inches='tight')
 plt.show()
