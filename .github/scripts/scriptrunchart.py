@@ -78,7 +78,7 @@ plt.savefig(os.path.join(output_dir, f'grafico_semanal_{fecha_str}.png'), dpi=30
 plt.close()
 
 # 2. Gráfico Mensual por Semanas
-año_mes_actual = fecha_actual.strftime('%Y-%m')
+año_mes_actual = f"{fecha_actual.year}-{fecha_actual.month}"  # Se actualiza para que el formato sea consistente
 plt.figure()
 semanas_mes = [f"{año_mes_actual}-S{s}" for s in range(1, 6)]
 open_semanal = [open_issues_weekly.get(semana, 0) for semana in semanas_mes]
@@ -94,6 +94,7 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, f'grafico_mensual_{año_mes_actual}.png'), dpi=300)
 plt.close()
+
 
 # 3. Gráfico Global Mensual
 plt.figure()
