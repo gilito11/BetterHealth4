@@ -90,4 +90,4 @@ plt.close(fig2)
 
 # Gráfico semanal global
 keys_custom = sorted(set(open_issues_weekly_custom.keys()) | set(closed_issues_weekly_custom.keys()))
-labels_custom = [f"Week {k[2]
+labels_custom = [f"Week {k[2]} - {datetime(k[0], k[1], 1).strftime('%B')}" for k in keys_custom]
