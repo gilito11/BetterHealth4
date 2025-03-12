@@ -33,7 +33,7 @@ jobs:
           name: histogram_issues_open
           path: histogram_issues_open.png
       - name: Upload Histogram closed issues
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: histogram_issues_closed
           path: histogram_issues_closed.png
