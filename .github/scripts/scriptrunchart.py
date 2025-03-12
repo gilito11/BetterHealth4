@@ -8,17 +8,17 @@ import json
 # Establecer la localización a español para los nombres de mes
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
+# Definir un directorio de salida para los gráficos
+output_dir = 'output'
+os.makedirs(output_dir, exist_ok=True)
+
 # Leer el archivo issues.json generado por la acción de GitHub
-issues_file = os.getenv('ISSUES_FILE', 'issues.json')  # Leemos el archivo de issues desde el entorno
+issues_file = os.getenv('ISSUES_FILE', 'issues.json')
 with open(issues_file, 'r') as file:
-    issues = json.load(file)  # Cargar los datos de issues desde el archivo JSON
+    issues = json.load(file)
 
 def week_of_month(fecha):
     return (fecha.day - 1) // 7 + 1
-
-# Definir un directorio para guardar los gráficos (puedes cambiarlo si prefieres otra carpeta)
-directorio = 'grafico_historial'
-os.makedirs(directorio, exist_ok=True)
 
 # Diccionarios para agrupar datos
 open_issues_daily = {}
@@ -57,50 +57,18 @@ closed_weekly = [closed_issues_daily.get(dia, 0) for dia in dias_semana]
 fecha_str = fecha_actual.strftime('%Y-%m-%d')
 
 # Gráfico semanal
-fig1 = plt.figure(figsize=(10, 5))
+plt.figure(figsize=(10, 5))
 plt.plot(dias_semana, open_weekly, label='Issues Abiertas', color='blue')
 plt.plot(dias_semana, closed_weekly, label='Issues Cerradas', color='green')
 plt.xlabel('Día de la Semana')
 plt.ylabel('Cantidad de Issues')
-plt.title(f'Progresión Semanal')
+plt.title('Progresión Semanal')
 plt.legend()
 plt.grid(True)
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig(f'{directorio}/grafico_semanal_{fecha_str}.png')
-plt.close(fig1)
+plt.savefig(f'{output_dir}/grafico_semanal_{fecha_str}.png')
+plt.close()
 
-# Gráfico mensual
-todos_meses = sorted(set(list(open_issues_monthly.keys()) + list(closed_issues_monthly.keys())))
-open_monthly = [open_issues_monthly.get(mes, 0) for mes in todos_meses]
-closed_monthly = [closed_issues_monthly.get(mes, 0) for mes in todos_meses]
-fig2 = plt.figure(figsize=(10, 5))
-plt.plot(todos_meses, open_monthly, label='Issues Abiertas', color='blue')
-plt.plot(todos_meses, closed_monthly, label='Issues Cerradas', color='green')
-plt.xlabel('Mes')
-plt.ylabel('Cantidad de Issues')
-plt.title('Progresión Global de Issues (por Mes)')
-plt.legend()
-plt.grid(True)
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.savefig(f'{directorio}/grafico_global_mensual_{fecha_str}.png')
-plt.close(fig2)
-
-# Gráfico semanal global
-keys_custom = sorted(set(open_issues_weekly_custom.keys()) | set(closed_issues_weekly_custom.keys()))
-labels_custom = [f"Week {k[2]} - {datetime(k[0], k[1], 1).strftime('%B')}" for k in keys_custom]
-open_weekly_custom = [open_issues_weekly_custom.get(k, 0) for k in keys_custom]
-closed_weekly_custom = [closed_issues_weekly_custom.get(k, 0) for k in keys_custom]
-fig3 = plt.figure(figsize=(10, 5))
-plt.plot(labels_custom, open_weekly_custom, label='Issues Abiertas', color='blue')
-plt.plot(labels_custom, closed_weekly_custom, label='Issues Cerradas', color='green')
-plt.xlabel('Semana')
-plt.ylabel('Cantidad de Issues')
-plt.title('Progresión Semanal Global de Issues')
-plt.legend()
-plt.grid(True)
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.savefig(f'{directorio}/grafico_semanal_global_{fecha_str}.png')
-plt.close(fig3)
+# Verificar que los archivos fueron generados
+print("Archivos generados en:", os.listdir(output_dir))
