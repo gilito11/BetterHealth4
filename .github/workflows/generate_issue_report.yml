@@ -48,6 +48,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gráficos  # Nombre del artifact que puedes usar para identificarlo
-
+          path: output/*.png
 
         continue-on-error: true
