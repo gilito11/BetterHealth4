@@ -16,6 +16,31 @@ with open(issues_file, 'r') as file:
 def week_of_month(fecha):
     return (fecha.day - 1) // 7 + 1
 
+# Si no se pudo leer desde archivo, intentar con token
+try:
+    REPO_OWNER = 'gilito11'
+    REPO_NAME = 'BetterHealth4'
+    url = f'https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues?state=all&per_page=100'
+        
+    print(f"Obteniendo issues desde la API de GitHub: {url}")
+    headers = {}
+        
+    # Usar token si está disponible (aumenta límite de tasa)
+    github_token = os.getenv('GITHUB_TOKEN')
+    if github_token:
+        headers['Authorization'] = f'token {github_token}'
+            
+    response = requests.get(url, headers=headers, timeout=15)
+    if response.status_code != 200:
+        print(f"Error de API: Código {response.status_code}")
+        print(f"Respuesta: {response.text}")
+        return []
+            
+    return response.json()
+except Exception as e:
+    print(f"Error al obtener issues desde la API: {e}")
+    return []
+
 # Definir un directorio para guardar los gráficos (puedes cambiarlo si prefieres otra carpeta)
 directorio = 'grafico_historial'
 os.makedirs(directorio, exist_ok=True)
