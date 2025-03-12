@@ -22,7 +22,7 @@ semana_actual = f"Semana_{fecha_actual.isocalendar()[1]}"
 directorio = f'grafico_historial/{semana_actual}'
 os.makedirs(directorio, exist_ok=True)
 
-# Si no se pudo leer desde archivo, intentar con la API
+# Si no se pudo leer desde archivo, intentar con token
 try:
     REPO_OWNER = 'gilito11'
     REPO_NAME = 'BetterHealth4'
