@@ -64,31 +64,39 @@ for issue in issues:
 fecha_actual = datetime.now()
 fecha_str = fecha_actual.strftime('%Y-%m-%d')
 
-# GRÁFICO 1: Gráfico semanal
+# Configuración común para todos los gráficos
+plt.rcParams['figure.figsize'] = (12, 6)
+plt.rcParams['axes.grid'] = True
+plt.rcParams['grid.linestyle'] = '--'
+plt.rcParams['grid.alpha'] = 0.7
+
+# GRÁFICO 1: Gráfico semanal (lineal con puntos)
 print("Generando gráfico 1: Progresión Semanal de Issues")
 start_week = fecha_actual.date() - timedelta(days=fecha_actual.weekday())
 dias_semana = [start_week + timedelta(days=i) for i in range(7)]
 open_weekly = [open_issues_daily.get(dia, 0) for dia in dias_semana]
 closed_weekly = [closed_issues_daily.get(dia, 0) for dia in dias_semana]
 
-plt.figure(figsize=(10, 5))
-plt.plot(dias_semana, open_weekly, label='Issues Abiertas', color='blue', marker='o')
-plt.plot(dias_semana, closed_weekly, label='Issues Cerradas', color='green', marker='s')
+# Convertir fechas a etiquetas para el eje X
+etiquetas_dias = [dia.strftime('%a %d/%m') for dia in dias_semana]
+
+plt.figure()
+plt.plot(range(len(dias_semana)), open_weekly, label='Issues Abiertas', color='blue', marker='o', linestyle='-', linewidth=2)
+plt.plot(range(len(dias_semana)), closed_weekly, label='Issues Cerradas', color='green', marker='s', linestyle='-', linewidth=2)
 plt.xlabel('Día de la Semana')
 plt.ylabel('Cantidad de Issues')
 plt.title('Progresión Semanal de Issues')
 plt.legend()
-plt.grid(True)
-plt.xticks(rotation=45)
+plt.xticks(range(len(dias_semana)), etiquetas_dias, rotation=45)
 plt.tight_layout()
 
 output_path = os.path.join(output_dir, f'grafico_semanal_{fecha_str}.png')
 print(f"Guardando gráfico en: {output_path}")
-plt.savefig(output_path)
+plt.savefig(output_path, dpi=300)
 print(f"¿El archivo fue creado? {os.path.exists(output_path)}")
 plt.close()
 
-# GRÁFICO 2: Gráfico mensual (últimos 6 meses)
+# GRÁFICO 2: Gráfico mensual (últimos 6 meses) - ahora lineal con puntos
 print("Generando gráfico 2: Estadísticas Mensuales de Issues")
 meses = []
 for i in range(5, -1, -1):
@@ -105,9 +113,9 @@ for mes in meses:
     fecha = datetime(int(year), int(month), 1)
     nombres_meses.append(fecha.strftime('%b %Y'))
 
-plt.figure(figsize=(12, 6))
-plt.bar([x-0.2 for x in range(len(meses))], open_monthly, width=0.4, label='Issues Abiertas', color='blue')
-plt.bar([x+0.2 for x in range(len(meses))], closed_monthly, width=0.4, label='Issues Cerradas', color='green')
+plt.figure()
+plt.plot(range(len(meses)), open_monthly, label='Issues Abiertas', color='blue', marker='o', linestyle='-', linewidth=2)
+plt.plot(range(len(meses)), closed_monthly, label='Issues Cerradas', color='green', marker='s', linestyle='-', linewidth=2)
 plt.xlabel('Mes')
 plt.ylabel('Cantidad de Issues')
 plt.title('Estadísticas Mensuales de Issues')
@@ -117,7 +125,7 @@ plt.tight_layout()
 
 output_path = os.path.join(output_dir, f'grafico_mensual_{fecha_str}.png')
 print(f"Guardando gráfico mensual en: {output_path}")
-plt.savefig(output_path)
+plt.savefig(output_path, dpi=300)
 print(f"¿El archivo fue creado? {os.path.exists(output_path)}")
 plt.close()
 
@@ -139,12 +147,13 @@ for fecha in fechas:
     open_acumulados.append(total_open)
     closed_acumulados.append(total_closed)
 
-# Gráfico de run chart (línea acumulativa)
-plt.figure(figsize=(12, 6))
-plt.plot(fechas, open_acumulados, label='Issues Abiertas Acumuladas', color='blue', linestyle='-')
-plt.plot(fechas, closed_acumulados, label='Issues Cerradas Acumuladas', color='green', linestyle='-')
-plt.fill_between(fechas, open_acumulados, color='blue', alpha=0.1)
-plt.fill_between(fechas, closed_acumulados, color='green', alpha=0.1)
+# Convertir fechas a etiquetas para el eje X
+etiquetas_fechas = [fecha.strftime('%d/%m') for fecha in fechas]
+indices_mostrar = [0, 10, 20, 30] if len(fechas) > 30 else list(range(len(fechas)))
+
+plt.figure()
+plt.plot(range(len(fechas)), open_acumulados, label='Issues Abiertas Acumuladas', color='blue', marker='o', linestyle='-', linewidth=2, markevery=5)
+plt.plot(range(len(fechas)), closed_acumulados, label='Issues Cerradas Acumuladas', color='green', marker='s', linestyle='-', linewidth=2, markevery=5)
 
 # Añadir línea de referencia (media)
 media_open = sum(open_acumulados) / len(open_acumulados)
@@ -156,13 +165,12 @@ plt.xlabel('Fecha')
 plt.ylabel('Cantidad Acumulada de Issues')
 plt.title('Run Chart: Tendencia de Issues en los Últimos 30 Días')
 plt.legend()
-plt.grid(True, linestyle='--', alpha=0.7)
-plt.xticks([fechas[0], fechas[10], fechas[20], fechas[30]], rotation=45)
+plt.xticks([i for i in indices_mostrar], [etiquetas_fechas[i] for i in indices_mostrar], rotation=45)
 plt.tight_layout()
 
 output_path = os.path.join(output_dir, f'runchart_issues_{fecha_str}.png')
 print(f"Guardando run chart en: {output_path}")
-plt.savefig(output_path)
+plt.savefig(output_path, dpi=300)
 print(f"¿El archivo fue creado? {os.path.exists(output_path)}")
 plt.close()
 
