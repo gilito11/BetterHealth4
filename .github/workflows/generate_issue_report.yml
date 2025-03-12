@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: read
 
 jobs:
   generate-report:
@@ -33,13 +34,19 @@ jobs:
       - name: 📦 Instalar dependencias
         run: pip install requests matplotlib
 
+      - name: 🧑‍💻 Obtener los datos de los issues desde GitHub
+        run: |
+          issues=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" "https://api.github.com/repos/${{ github.repository }}/issues?state=all&per_page=100")
+          echo "$issues" > issues.json
+          echo "ISSUES_FILE=issues.json" >> $GITHUB_ENV
+
       - name: 📊 Ejecutar el script de generación de gráficos
         run: python .github/scripts/scriptrunchart.py  # Ajusta la ruta si es necesario
 
       - name: 📂 Mover gráficos a la carpeta reports/
         run: |
           mkdir -p reports
-           mv grafico_historial/*/*.png reports/
+          mv grafico_historial/*/*.png reports/
 
       - name: 📝 Hacer commit y push de los gráficos
         run: |
