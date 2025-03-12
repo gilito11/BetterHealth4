@@ -46,7 +46,7 @@ jobs:
       - name: 📂 Mover gráficos a la carpeta grafico_historial/
         run: |
           mkdir -p grafico_historial  # Crear la carpeta en el repositorio si no existe
-          mv grafico_historial/*/*.png grafico_historial/  # Mover los gráficos generados
+          mv grafico_historial/*.png <destino>
 
       - name: 📝 Hacer commit y push de los gráficos
         run: |
