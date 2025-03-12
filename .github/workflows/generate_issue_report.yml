@@ -45,8 +45,7 @@ jobs:
 
       - name: 📂 Mover gráficos a la carpeta grafico_historial/
         run: |
-          mkdir -p grafico_historial  # Crear la carpeta en el repositorio si no existe
-          mv *.png grafico_historial/
+          mv *.png ishikawa/  # Mover los gráficos generados a la carpeta 'ishikawa'
 
       - name: 📝 Hacer commit y push de los gráficos
         run: |
