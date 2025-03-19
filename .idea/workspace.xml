@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88ea5cbc-cd41-4d0d-a771-4b425ad47fc9" name="Changes" comment="checksheet.py and checksheet.yml added in .github/scripts and .github/workflows">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BetterHealth4/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/BetterHealth4/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BetterHealthApp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/BetterHealthApp/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +16,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -28,12 +27,12 @@
     &quot;assignee&quot;: &quot;gilito11&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/gilito11/BetterHealth4.git",
-    "accountId": "1d4f5be4-461a-46e7-93a8-34ab397fa9ef"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/gilito11/BetterHealth4.git&quot;,
+    &quot;accountId&quot;: &quot;8485f850-c3a6-49cf-87cf-5ee25da85924&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>

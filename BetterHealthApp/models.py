@@ -27,6 +27,13 @@ class Administrator(models.Model):
         return f"Admin: {self.user_profile}"
 
 
+class Doctor(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"Dr. {self.name}"
+
+
 class Insurance(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -35,11 +42,11 @@ class Insurance(models.Model):
 
 
 class Service(models.Model):
-    service_name = models.CharField(max_length=100, unique=True)
-    description = models.TextField()
+    name = models.CharField(max_length=100, unique=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.service_name
+        return f"{self.name} - {self.doctor}"
 
 
 class InsuranceService(models.Model):
@@ -85,7 +92,6 @@ class Reminder(models.Model):
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     send_datetime = models.DateTimeField()
-    description = models.TextField()
 
     def __str__(self):
         return f"Reminder {self.id} - {self.patient} - {self.appointment}"
