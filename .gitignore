@@ -1,0 +1,20 @@
+# 🚨 Ignorar la base de datos (evita subir datos sensibles)
+db.sqlite3
+
+# 🚨 Ignorar migraciones de Django (pueden regenerarse)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# 🚨 Ignorar archivos compilados de Python
+*.pyc
+__pycache__/
+
+# 🚨 Ignorar dependencias y configuraciones locales
+poetry.lock
+pyproject.toml
+
+# 🚨 Ignorar configuración de PyCharm (archivos personales)
+.idea/
+
+# 🚨 Ignorar variables de entorno
+.env
