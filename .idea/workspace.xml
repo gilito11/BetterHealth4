@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ea5cbc-cd41-4d0d-a771-4b425ad47fc9" name="Changes" comment="update models.py Doctor added in models.py" />
+    <list default="true" id="88ea5cbc-cd41-4d0d-a771-4b425ad47fc9" name="Changes" comment="checksheet.py and checksheet.yml added in .github/scripts and .github/workflows">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pareto.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pareto.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -43,7 +41,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev-jordi-db&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/jordi/PycharmProjects/BetterHealth5/.github/workflows&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -102,15 +100,7 @@
       <option name="project" value="LOCAL" />
       <updated>1741766709040</updated>
     </task>
-    <task id="LOCAL-00003" summary="update models.py Doctor added in models.py">
-      <option name="closed" value="true" />
-      <created>1742379100417</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1742379100417</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,7 +121,6 @@
     <MESSAGE value="Gráfico semanal de issues actualizado" />
     <MESSAGE value="Añadir matplotlib como dependencia y mejorar generación de gráficos de issues" />
     <MESSAGE value="checksheet.py and checksheet.yml added in .github/scripts and .github/workflows" />
-    <MESSAGE value="update models.py Doctor added in models.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="update models.py Doctor added in models.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="checksheet.py and checksheet.yml added in .github/scripts and .github/workflows" />
   </component>
 </project>
